@@ -2528,3 +2528,87 @@ color: var(--accent-light);
 html {
   scroll-behavior: smooth;
 }
+/* --- CTA Section Styling (Clean & Spaced) --- */
+.psp-faq-cta {
+  margin-top: 5rem; /* مسافة كبيرة من الأعلى لفصله عن الأسئلة */
+  text-align: center;
+  position: relative;
+  /* تمت إزالة الخلفية والإطار والظلال كما طلبت */
+}
+
+.psp-faq-cta h3 {
+  margin-bottom: 4rem; /* تم زيادة المسافة هنا لفصل العنوان عن الجملة */
+  font-size: 2.5rem; /* تكبير الخط قليلاً ليكون أوضح */
+  color: #fff;
+  text-shadow: 0 0 15px rgba(164, 94, 255, 0.6); /* زيادة التوهج */
+}
+
+.psp-faq-cta p {
+  color: var(--text-gray);
+  margin-bottom: 3rem; /* مسافة بين الجملة والزر */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.psp-faq-cta .unified-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transform: scale(1.1); /* تكبير الزر قليلاً ليكون بارزاً */
+}
+
+
+@media (max-width: 768px) {
+
+  /* 1. ضبط هوامش قسم الأسئلة ليكون متناسقاً */
+  #psp-faq .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* 2. تصغير خطوط الأسئلة لتناسب عرض الشاشة */
+  .faq-question {
+    font-size: 0.95rem; /* تصغير الخط قليلاً */
+    padding: 1rem 0.8rem; /* تقليل الحشوة الداخلية */
+    gap: 10px;
+  }
+  
+  .faq-answer p {
+    font-size: 0.9rem;
+    padding-left: 0.5rem;
+  }
+
+  /* 3. تحسين قسم الـ CTA (الدعوة) في الجوال */
+  .psp-faq-cta {
+    margin-top: 5rem; /* تقليل المسافة العلوية الكبيرة (كانت 5rem) */
+    padding: 0 10px;
+  }
+
+  .psp-faq-cta h3 {
+    font-size: 1.5rem; /* تصغير العنوان ليناسب الشاشة */
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .psp-faq-cta p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+  }
+
+  /* 4. جعل زر الانضمام بعرض الشاشة بالكامل ليسهل الضغط عليه */
+  .psp-faq-cta .unified-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 12px 20px;
+    transform: scale(1); /* إلغاء التكبير (1.1) ليكون مناسباً للجوال */
+  }
+  
+  .psp-faq-cta .unified-button:active {
+    transform: scale(0.98);
+  }
+}
