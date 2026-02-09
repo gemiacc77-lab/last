@@ -1,0 +1,32 @@
+{
+  "name": "OPTILINE Agency",  
+  "short_name": "OPTILINE",
+  "description": "Get high-impact Brand Kit Design, Monthly Content Packs, and Ad Launchpads.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "productivity",
+    "design"
+  ],
+  "icons": [
+    {
+      "src": "/assets/imgs/icon-192.png", 
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/imgs/icon-512.png", 
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false
+}

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Sitemap: https://optiline.online/sitemap.xml
+# Disallow Project Brief Pages 
+Disallow: /project-submit-*

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Secure Checkout - NEXUS PACK | OPTILINE</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/webp" href="/assets/imgs/fav.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <header class="checkout-header-bar">
+        <a href="/" class="logo">
+            <img src="/assets/imgs/optiline-logo.webp" width="150" height="25" alt="OPTILINE">
+        </a>
+        <a href="/pricing/" class="header-pkg-btn">
+            <i class="fas fa-arrow-left"></i> Change Package
+        </a>
+    </header>
+    <main>
+        <section class="checkout-section nexus-glow">
+    <div class="checkout-bg-glow"></div>
+    <div class="hero-floating-dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="checkout-card checkout-card-unified">
+        <div class="checkout-header">
+            <h1>Initialize Nexus</h1>
+            <p>Accelerated systems for scaling businesses</p>
+        </div>
+        <div class="checkout-summary">
+            <h3>PACKAGE OVERVIEW</h3>
+            <ul>
+    <li><i class="fas fa-fingerprint"></i> <strong>Identity:</strong> Full Logo Set + 5-8 Page Guidelines</li>
+    <li><i class="fas fa-layer-group"></i> <strong>Content:</strong> 12 Professional Posts + Mini Calendar</li>
+    <li><i class="fas fa-bullseye"></i> <strong>Ads:</strong> Dual Campaign (Acquisition + Retargeting)</li>
+    <li><i class="fas fa-clock"></i> <strong>Delivery:</strong> 14 Business Days (3 Revisions)</li>
+</ul>
+            <span class="checkout-total">$1,399.00</span>
+        </div>
+        <div id="paypal-button-nexus" style="min-height: 150px; position: relative; z-index: 5; margin-top: 20px;"></div>
+       <div class="secure-badge">
+    <span>
+        <i class="fas fa-lock"></i> 256-bit SSL Encrypted
+    </span>
+    <span>
+        <i class="fas fa-shield-alt"></i> Secure Payment
+    </span>
+</div>
+</section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AVC5DnyZf-3MykD_aZ9oznaqOpR6Zh9hk33e39TY1WF7ttV8ykJd_aIUekPSlTOUW-42NuKiGL_5tCQG&currency=USD" data-cfasync="false"></script>
+    <script src="/assets/js/payment.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const waitForPayPal = setInterval(function() {
+                if (window.paypal) {
+                    clearInterval(waitForPayPal);
+                    console.log("PayPal SDK Loaded. Initializing Nexus Button...");
+                    if (typeof initPayPalButton === 'function') {
+                        initPayPalButton({
+                            containerId: 'paypal-button-nexus', 
+                            price: '1399',
+                            packageName: 'NEXUS PACK'
+                        });
+                    }
+                }
+            }, 100);
+            setTimeout(() => clearInterval(waitForPayPal), 10000);
+        });
+    </script>
+    <div id="cookie-banner" class="cookie-banner">
+        <div class="cookie-content">
+            <h3><i class="fas fa-user-shield"></i> Privacy Preference Center</h3>
+            <p>
+                We utilize cookies and essential technologies to engineer a seamless digital experience, optimize site performance, and enable core marketing functions. By clicking "Accept", you acknowledge our use of these technologies.
+            </p>
+            <div class="cookie-buttons">
+                <button id="accept-cookies">Accept All</button>
+                <button id="reject-cookies">Decline</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
