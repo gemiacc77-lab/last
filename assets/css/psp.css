@@ -293,7 +293,7 @@ body {
 .input-wrapper input,
 .input-wrapper textarea {
   width: 100%;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(68, 67, 67, 0.07);
   border: 2px solid rgba(255, 255, 255, 0.1);
   padding: 14px 15px 14px 45px;
   border-radius: 12px;
@@ -312,6 +312,7 @@ body {
   box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
   transform: translateY(-3px);
 }
+
 .input-wrapper i {
   position: absolute;
   left: 15px;
