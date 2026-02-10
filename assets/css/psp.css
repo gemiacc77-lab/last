@@ -55,18 +55,7 @@ body {
   opacity: 1;
 }
 .psp-glow-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(138, 43, 226, 0.1) 0%,
-    transparent 80%
-  );
-  z-index: -1;
-  pointer-events: none;
+  display: none;
 }
 .hero-floating-dots {
   position: absolute;
@@ -304,22 +293,24 @@ body {
 .input-wrapper input,
 .input-wrapper textarea {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--card-border-color);
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   padding: 14px 15px 14px 45px;
   border-radius: 12px;
-  color: var(--text-light);
+  color: white;
   font-size: 1rem;
-  font-family: var(--font-main);
-  transition: all var(--transition-fast);
+  font-family: inherit;
+  transition: all 0.3s ease;
   resize: vertical;
+  box-sizing: border-box;
 }
 .input-wrapper input:focus,
 .input-wrapper textarea:focus {
   outline: none;
-  border-color: var(--accent-light);
-  background: rgba(138, 43, 226, 0.1);
-  box-shadow: 0 0 15px var(--glow-color);
+  background: rgba(44, 42, 42, 0.1);
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
+  transform: translateY(-3px);
 }
 .input-wrapper i {
   position: absolute;
