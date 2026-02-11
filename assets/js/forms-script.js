@@ -692,7 +692,7 @@ function initializeFormHandlers(config) {
                         body: JSON.stringify(dataObj)
                     });
                     const result = await response.json();
-                    if (result.status === 'ok') {
+                    if (result.status === 'success') {
                         isFormSubmitted = true;
                         clearSmartAutoSave();
                         formLoading.classList.remove('active');
