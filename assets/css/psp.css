@@ -2657,3 +2657,88 @@ html {
     gap: 0 !important; 
   }
 }
+.dash-header,
+.referral-box,
+.stats-grid,
+.charts-grid,
+.data-panel,
+.milestones-section,
+.builder-section,
+.activity-section,
+.ai-section,
+.tips-section,
+.toolkit-section-public,
+.commission-section,
+#enrollment,
+#psp-faq,
+.psp-policy-section,
+.psp-faq-cta {
+    margin-bottom: 5rem !important;
+}
+
+@media (max-width: 768px) {
+    .dash-header,
+    .referral-box,
+    .stats-grid,
+    .charts-grid,
+    .data-panel,
+    .milestones-section,
+    .builder-section,
+    .activity-section,
+    .ai-section,
+    .tips-section,
+    .toolkit-section-public,
+    .commission-section,
+    #enrollment,
+    #psp-faq,
+    .psp-policy-section,
+    .psp-faq-cta {
+        margin-bottom: 3rem !important;
+    }
+}
+
+.psp-hero-layout {
+    padding-bottom: 5rem !important;
+}
+
+.toolkit-section-public {
+    padding: 0 !important;
+}
+
+.commission-section {
+    padding: 0 !important;
+}
+
+.section {
+    padding: 0 !important;
+}
+.commission-section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+}
+
+.commission-section .section-title {
+    margin-top: 2rem !important;
+}
+
+.commission-info-card {
+    margin-bottom: 2rem !important;
+}
+.psp-faq-cta {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    margin-top: 0 !important;
+}
+
+@media (min-width: 1024px) {
+    .psp-faq-cta {
+        padding: 3rem 2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .psp-faq-cta {
+        padding: 2rem 1rem !important;
+        margin-bottom: 4rem !important;
+    }
+}
