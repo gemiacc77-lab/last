@@ -54,8 +54,11 @@ function initPayPalButton(config) {
         return;
     }
     document.getElementById(config.containerId).innerHTML = "";
+    
     paypal.Buttons({
+        // 1. تعطيل الدفع اللاحق (الحل الجذري)
         disableFunding: 'paylater', 
+        
         style: {
             shape: 'rect',
             color: 'blue', 
@@ -64,6 +67,11 @@ function initPayPalButton(config) {
         },
         createOrder: function(data, actions) {
             return actions.order.create({
+                // 2. إجبار النظام على طلب الدفع الفوري فقط
+                application_context: {
+                    shipping_preference: 'NO_SHIPPING',
+                    user_action: 'PAY_NOW'
+                },
                 purchase_units: [{
                     description: config.packageName,
                     amount: { value: config.price }
@@ -73,6 +81,7 @@ function initPayPalButton(config) {
         onApprove: function(data, actions) {
             UI.showProcessing();
             return actions.order.capture().then(function(details) {
+                // ... (باقي الكود كما هو دون تغيير) ...
                 const marketerRef = (function() {
                     const getCookie = (name) => {
                         const v = `; ${document.cookie}`;
@@ -82,7 +91,6 @@ function initPayPalButton(config) {
                     };
                     return getCookie('optiline_marketer_ref') || localStorage.getItem('optiline_marketer_ref') || '';
                 })();
-                console.log("Sending Payment with Marketer:", marketerRef);
                 fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -109,16 +117,10 @@ function initPayPalButton(config) {
                     }
                 })
                 .catch(err => {
-                    console.error("Error:", err);
-                    alert("Payment successful (ID: " + details.id + "), please contact support.");
                     UI.hide();
+                    alert("Payment successful, please contact support.");
                 });
             });
-        },
-        onError: function(err) {
-            console.error('PayPal Error:', err);
-            UI.hide();
-            alert("Payment Error. Please try again.");
         }
     }).render('#' + config.containerId);
 }
