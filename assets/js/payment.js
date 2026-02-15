@@ -55,6 +55,7 @@ function initPayPalButton(config) {
     }
     document.getElementById(config.containerId).innerHTML = "";
     paypal.Buttons({
+        disableFunding: 'paylater', 
         style: {
             shape: 'rect',
             color: 'blue', 
