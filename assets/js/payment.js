@@ -56,8 +56,8 @@ function initPayPalButton(config) {
     document.getElementById(config.containerId).innerHTML = "";
     
     paypal.Buttons({
-        // 1. تعطيل الدفع اللاحق (الحل الجذري)
-        disableFunding: 'paylater', 
+        // الحل النهائي: استبعاد جميع خيارات التقسيط والدفع اللاحق برمجياً
+        fundingSource: paypal.FUNDING.PAYPAL, // إجبار الزر على أن يكون PayPal فقط
         
         style: {
             shape: 'rect',
@@ -65,13 +65,13 @@ function initPayPalButton(config) {
             layout: 'vertical',
             label: 'pay',
         },
+        // منع ظهور أي أزرار أخرى مثل Pay Later أو الائتمان
+        disableFunding: [ 
+            paypal.FUNDING.PAY_LATER,
+            paypal.FUNDING.CREDIT
+        ],
         createOrder: function(data, actions) {
             return actions.order.create({
-                // 2. إجبار النظام على طلب الدفع الفوري فقط
-                application_context: {
-                    shipping_preference: 'NO_SHIPPING',
-                    user_action: 'PAY_NOW'
-                },
                 purchase_units: [{
                     description: config.packageName,
                     amount: { value: config.price }
