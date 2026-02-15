@@ -56,20 +56,14 @@ function initPayPalButton(config) {
     document.getElementById(config.containerId).innerHTML = "";
     
     paypal.Buttons({
-        // الحل النهائي: استبعاد جميع خيارات التقسيط والدفع اللاحق برمجياً
-        fundingSource: paypal.FUNDING.PAYPAL, // إجبار الزر على أن يكون PayPal فقط
-        
+        fundingSource: paypal.FUNDING.PAYPAL,
+
         style: {
             shape: 'rect',
             color: 'blue', 
             layout: 'vertical',
             label: 'pay',
         },
-        // منع ظهور أي أزرار أخرى مثل Pay Later أو الائتمان
-        disableFunding: [ 
-            paypal.FUNDING.PAY_LATER,
-            paypal.FUNDING.CREDIT
-        ],
         createOrder: function(data, actions) {
             return actions.order.create({
                 purchase_units: [{
@@ -79,48 +73,15 @@ function initPayPalButton(config) {
             });
         },
         onApprove: function(data, actions) {
-            UI.showProcessing();
+            UI.showProcessing(); 
             return actions.order.capture().then(function(details) {
-                // ... (باقي الكود كما هو دون تغيير) ...
-                const marketerRef = (function() {
-                    const getCookie = (name) => {
-                        const v = `; ${document.cookie}`;
-                        const p = v.split(`; ${name}=`);
-                        if (p.length === 2) return p.pop().split(';').shift();
-                        return null;
-                    };
-                    return getCookie('optiline_marketer_ref') || localStorage.getItem('optiline_marketer_ref') || '';
-                })();
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        event_type: "PAYMENT.CAPTURE.COMPLETED",
-                        resource: {
-                            id: details.id,
-                            amount: { value: config.price },
-                            payer: details.payer,
-                            package: config.packageName,
-                            marketer: marketerRef 
-                        }
-                    })
-                })
-                .then(response => response.json())
-                .then(serverData => {
-                    if (serverData.status === 'success' && serverData.url) {
-                        UI.showSuccess();
-                        setTimeout(() => {
-                            window.location.href = serverData.url;
-                        }, 2000);
-                    } else {
-                        throw new Error(serverData.message || "Verification failed");
-                    }
-                })
-                .catch(err => {
-                    UI.hide();
-                    alert("Payment successful, please contact support.");
-                });
+                const marketerRef = (function() {  })();
             });
+        },
+        onError: function(err) {
+            console.error('PayPal Error:', err);
+            UI.hide();
+            alert("Payment Error. Please try again.");
         }
     }).render('#' + config.containerId);
 }
