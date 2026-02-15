@@ -54,70 +54,75 @@ function initPayPalButton(config) {
         return;
     }
     document.getElementById(config.containerId).innerHTML = "";
-    paypal.Buttons({
-        style: {
-            shape: 'rect',
-            color: 'blue', 
-            layout: 'vertical',
-            label: 'pay',
-        },
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: config.packageName,
-                    amount: { value: config.price }
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            UI.showProcessing();
-            return actions.order.capture().then(function(details) {
-                const marketerRef = (function() {
-                    const getCookie = (name) => {
-                        const v = `; ${document.cookie}`;
-                        const p = v.split(`; ${name}=`);
-                        if (p.length === 2) return p.pop().split(';').shift();
-                        return null;
-                    };
-                    return getCookie('optiline_marketer_ref') || localStorage.getItem('optiline_marketer_ref') || '';
-                })();
-                console.log("Sending Payment with Marketer:", marketerRef);
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        event_type: "PAYMENT.CAPTURE.COMPLETED",
-                        resource: {
-                            id: details.id,
-                            amount: { value: config.price },
-                            payer: details.payer,
-                            package: config.packageName,
-                            marketer: marketerRef 
+    function getButtonConfig(fundingSource) {
+        return {
+            fundingSource: fundingSource,
+            style: {
+                shape: 'rect',
+                color: fundingSource === paypal.FUNDING.PAYPAL ? 'blue' : 'black',
+                layout: 'vertical',
+                label: 'pay',
+            },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        description: config.packageName,
+                        amount: { value: config.price }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                UI.showProcessing();
+                return actions.order.capture().then(function(details) {
+                    const marketerRef = (function() {
+                        const getCookie = (name) => {
+                            const v = `; ${document.cookie}`;
+                            const p = v.split(`; ${name}=`);
+                            if (p.length === 2) return p.pop().split(';').shift();
+                            return null;
+                        };
+                        return getCookie('optiline_marketer_ref') || localStorage.getItem('optiline_marketer_ref') || '';
+                    })();
+                    console.log("Sending Payment with Marketer:", marketerRef);
+                    fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            event_type: "PAYMENT.CAPTURE.COMPLETED",
+                            resource: {
+                                id: details.id,
+                                amount: { value: config.price },
+                                payer: details.payer,
+                                package: config.packageName,
+                                marketer: marketerRef 
+                            }
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(serverData => {
+                        if (serverData.status === 'success' && serverData.url) {
+                            UI.showSuccess();
+                            setTimeout(() => {
+                                window.location.href = serverData.url;
+                            }, 2000);
+                        } else {
+                            throw new Error(serverData.message || "Verification failed");
                         }
                     })
-                })
-                .then(response => response.json())
-                .then(serverData => {
-                    if (serverData.status === 'success' && serverData.url) {
-                        UI.showSuccess();
-                        setTimeout(() => {
-                            window.location.href = serverData.url;
-                        }, 2000);
-                    } else {
-                        throw new Error(serverData.message || "Verification failed");
-                    }
-                })
-                .catch(err => {
-                    console.error("Error:", err);
-                    alert("Payment successful (ID: " + details.id + "), please contact support.");
-                    UI.hide();
+                    .catch(err => {
+                        console.error("Error:", err);
+                        alert("Payment successful (ID: " + details.id + "), please contact support.");
+                        UI.hide();
+                    });
                 });
-            });
-        },
-        onError: function(err) {
-            console.error('PayPal Error:', err);
-            UI.hide();
-            alert("Payment Error. Please try again.");
-        }
-    }).render('#' + config.containerId);
+            },
+            onError: function(err) {
+                console.error('PayPal Error:', err);
+                UI.hide();
+                alert("Payment Error. Please try again.");
+            }
+        };
+    }
+    paypal.Buttons(getButtonConfig(paypal.FUNDING.PAYPAL)).render('#' + config.containerId);
+    paypal.Buttons(getButtonConfig(paypal.FUNDING.CARD)).render('#' + config.containerId);
 }
