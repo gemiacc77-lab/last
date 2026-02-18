@@ -106,13 +106,11 @@ function initPayPalButton(config) {
             }),
           })
             .then((response) => response.json())
-            // تعديل مطور لمنع خطأ 425 عند وجود مسوقين
             .then((serverData) => {
               if (serverData.status === "success" && serverData.url) {
-                UI.showSuccess(); // إظهار علامة الصح للعميل
+                UI.showSuccess(); 
 
-                // إذا كان هناك مسوق، نزيد وقت الانتظار قليلاً (4 ثوانٍ) لضمان استقرار السيرفر
-                // إذا لم يوجد، ننتظر 2.5 ثانية فقط
+   
                 const isMarketerPresent =
                   window.location.search.includes("ref=");
                 const delayTime = isMarketerPresent ? 4000 : 2500;
